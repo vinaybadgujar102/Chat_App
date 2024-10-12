@@ -10,13 +10,10 @@ const io = new Server(server, { cors: { origin: "*" } });
 io.on("connection", (socket) => {
   console.log("Connected:", socket.id);
 
-  socket.on("message", (message) => {
-    console.log("Received message:", message);
+  socket.on("msg_send", (data) => {
+    console.log(data);
+    io.emit("msg_rcvd", data);
   });
-
-  setInterval(() => {
-    socket.emit("message", "Hello");
-  }, 2000);
 });
 
 app.use("/", express.static("public"));
